@@ -15,43 +15,56 @@ var ops = stdio.getopt({
     'verify': {key: 'v', description: 'Path to file(s) to verify', args: '*'}
 });
 
-function getPathContents(dir, keyList) {
+function getPathContents(dir, keys) {
   return readdir(dir).then((dirListing) => {
     return Promise.map(dirListing, (listing) => {
       const fullPath = path.join(dir, listing);
       return stat(fullPath).then((stats) => {
         if (!stats.isDirectory()) {
           // parse from file
-          getKeysFromFile(fullPath, keyList)
+          getKeysFromFile(fullPath).then(function(keys) {
+            // keys.push(res);
+          });
         }
       });
     });
   });
 }
 
-function getKeysFromFile(fullFileName, keyList) {
+function getKeysFromFile(fullFileName) {
   console.log(fullFileName);
-  readFile(fullFileName, 'utf8').then(function (data) {
+  return readFile(fullFileName, 'utf8').then(function (data, keys) {
     // Todo: custom pattern
-    var translateParseRegexp = /i18n\.translate\('(.*)'\)/;
-    data.replace(translateParseRegexp, function(data, keys) {
-      console.log(keys);
-      keyList.push(keys); // not yet seeing keys in Promise result
-    });
+    var parseKeyRegex = /i18n\.translate\('(.*)'\)/g;
+    var m;
+    // var keys = [];
+
+    do {
+      m = parseKeyRegex.exec(data);
+      if (m) {
+        console.log(m[1]);
+        // keys.push(m[1]);
+      }
+    } while (m);
+    return keys;
+    // data.replace(translateParseRegexp, function(data, keys) {
+    //   console.log(keys);
+    //   // keys.push(keys); // not yet seeing keys in Promise result
+    // });
   })
 }
 
 var filePaths = ops.parse;
 
-let keyList = [];
+let keys = [];
 if (Array.isArray(filePaths)) {
   for (file of filePaths) {
-    getPathContents(file, keyList).then(function(res) { 
+    getPathContents(file, keys).then(function(res) { 
       console.log(res.val); 
     });
   }
 } else {
-  getPathContents(filePaths, keyList).then(function(res) { 
-    console.log(keyList);
+  getPathContents(filePaths, keys).then(function(res) { 
+    console.log(keys);
   });
 }
