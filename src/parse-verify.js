@@ -9,8 +9,9 @@ const readFile = Promise.promisify(fs.readFile);
 const writeFile = Promise.promisify(fs.writeFile);
 
 var ops = stdio.getopt({
-    'parse': {key: 'p', description: 'Paths to directories containing files to parse', mandatory: true, args: '*'},
-    'verify': {key: 'v', description: 'Path to file to verify against', mandatory: true, args: 1}
+    'parse': {key: 'c', description: 'Paths to directories containing constructs to parse', mandatory: true, args: '*'},
+    'verify': {key: 'v', description: 'Path to file to verify against', mandatory: true, args: 1},
+    'pattern': {key: 'p', description: 'Regex pattern to parse against', args: 1, default: 'translate\\(\'(.*)\'\\)'}
 });
 
 function verify(parseDir) {
@@ -28,8 +29,6 @@ function verify(parseDir) {
 
 function verifyKeysInFile(fullFileName) {
   return readFile(fullFileName, 'utf8').then(function (data) {
-    // Todo: custom pattern
-    var parseKeyRegex = /i18n\.translate\('(.*)'\)/g;
     var key;
 
     readFile(translationFile, 'utf8').then(function (translationData) {
@@ -47,6 +46,7 @@ function verifyKeysInFile(fullFileName) {
 
 var parsePaths = ops.parse;
 var translationFile = ops.verify;
+var parseKeyRegex = new RegExp(ops.pattern, 'g');
 
 if (Array.isArray(parsePaths)) {
   for (var parseDir of parsePaths) {
