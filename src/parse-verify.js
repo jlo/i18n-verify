@@ -1,5 +1,3 @@
-"use strict";
-
 var fs = require('fs');
 var path = require('path');
 var Promise = require('bluebird');
@@ -11,60 +9,49 @@ const readFile = Promise.promisify(fs.readFile);
 const writeFile = Promise.promisify(fs.writeFile);
 
 var ops = stdio.getopt({
-    'parse': {key: 'p', description: 'Path to file(s) to parse', mandatory: true, args: '*'},
-    'verify': {key: 'v', description: 'Path to file(s) to verify', args: '*'}
+    'parse': {key: 'p', description: 'Paths to directories containing files to parse', mandatory: true, args: '*'},
+    'verify': {key: 'v', description: 'Path to file to verify against', mandatory: true, args: 1}
 });
 
-function getPathContents(dir, keys) {
-  return readdir(dir).then((dirListing) => {
+function verify(parseDir) {
+  return readdir(parseDir).then((dirListing) => {
     return Promise.map(dirListing, (listing) => {
-      const fullPath = path.join(dir, listing);
+      const fullPath = path.join(parseDir, listing);
       return stat(fullPath).then((stats) => {
         if (!stats.isDirectory()) {
-          // parse from file
-          getKeysFromFile(fullPath).then(function(keys) {
-            // keys.push(res);
-          });
+          verifyKeysInFile(fullPath);
         }
       });
     });
   });
 }
 
-function getKeysFromFile(fullFileName) {
-  console.log(fullFileName);
-  return readFile(fullFileName, 'utf8').then(function (data, keys) {
+function verifyKeysInFile(fullFileName) {
+  return readFile(fullFileName, 'utf8').then(function (data) {
     // Todo: custom pattern
     var parseKeyRegex = /i18n\.translate\('(.*)'\)/g;
-    var m;
-    // var keys = [];
+    var key;
 
-    do {
-      m = parseKeyRegex.exec(data);
-      if (m) {
-        console.log(m[1]);
-        // keys.push(m[1]);
-      }
-    } while (m);
-    return keys;
-    // data.replace(translateParseRegexp, function(data, keys) {
-    //   console.log(keys);
-    //   // keys.push(keys); // not yet seeing keys in Promise result
-    // });
+    readFile(translationFile, 'utf8').then(function (translationData) {
+      do {
+        key = parseKeyRegex.exec(data);
+        if (key) {
+          if (translationData.indexOf(key[1]) == -1) {
+            console.log('\'' + key[1] + '\'' + ' from ' + fullFileName + ' not present in ' + translationFile);
+          }
+        }
+      } while (key);
+    })
   })
 }
 
-var filePaths = ops.parse;
+var parsePaths = ops.parse;
+var translationFile = ops.verify;
 
-let keys = [];
-if (Array.isArray(filePaths)) {
-  for (file of filePaths) {
-    getPathContents(file, keys).then(function(res) { 
-      console.log(res.val); 
-    });
+if (Array.isArray(parsePaths)) {
+  for (var parseDir of parsePaths) {
+    verify(parseDir);
   }
 } else {
-  getPathContents(filePaths, keys).then(function(res) { 
-    console.log(keys);
-  });
+  verify(parsePaths);
 }
