@@ -1,0 +1,26 @@
+{
+  "name": "translation-verification",
+  "version": "1.0.0",
+  "description": "Translation verification tool",
+  "main": "command.js",
+  "scripts": {
+    "test": "mocha test/all.js"
+  },
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "kibana",
+    "translation",
+    "verification"
+  ],
+  "author": "Jonathan Lo <jlo@us.ibm.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "bluebird": "^3.4.5",
+    "command-line-args": "^3.0.1",
+    "stdio": "^0.2.7"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  }
+}
