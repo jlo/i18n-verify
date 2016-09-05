@@ -25,7 +25,7 @@
   "licenses": [
     {
       "type": "Apache-2.0",
-      "url": "https://github.com/posijon/i18n-verify/blob/master/LICENSE"
+      "url": "https://github.com/posijon/i18n-verify/blob/master/LICENSE.md"
     }
   ],
   "main": "bin/command.js",
