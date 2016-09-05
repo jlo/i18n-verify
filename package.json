@@ -2,14 +2,6 @@
   "name": "i18n-verify",
   "version": "0.0.4",
   "description": "Translation verification tool",
-  "bin": {
-    "i18n-verify": "bin/command.js"
-  },
-  "main": "bin/command.js",
-  "scripts": {
-    "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
-    "test": "mocha"
-  },
   "keywords": [
     "i18n",
     "internationalization",
@@ -17,8 +9,33 @@
     "translation",
     "verification"
   ],
-  "author": "Jonathan Lo <jlo@us.ibm.com>",
-  "license": "Apache-2.0",
+  "homepage": "https://github.com/posijon/i18n-verify",
+  "author": {
+    "name": "Jonathan Lo",
+    "email": "jlo@us.ibm.com",
+    "url": "https://github.com/posijon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:posijon/i18n-verify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/posijon/i18n-verify/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/posijon/i18n-verify/blob/master/LICENSE"
+    }
+  ],
+  "main": "bin/command.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
+    "test": "mocha"
+  },
   "dependencies": {
     "bluebird": "^3.4.5",
     "command-line-args": "^3.0.1",
@@ -30,5 +47,9 @@
     "mocha-sinon": "^1.1.6",
     "should": "^11.1.0",
     "sinon": "^1.17.5"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "i18n-verify": "bin/command.js"
   }
 }

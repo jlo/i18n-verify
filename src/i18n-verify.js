@@ -39,7 +39,6 @@ function verifyKeysInFile(fullFileName, translationFile, parseKeyRegex) {
 
 module.exports = {
   main: function(parsePaths, translationFile, parseKeyRegex) {
-    console.log('SOMERhiNF')
     if (Array.isArray(parsePaths)) {
       for (var parseDir of parsePaths) {
         verify(parseDir, translationFile, parseKeyRegex);
