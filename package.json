@@ -1,6 +1,6 @@
 {
   "name": "@jlo/i18n-verify",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Translation verification tool",
   "bin": {
     "i18n-verify": "bin/command.js"
