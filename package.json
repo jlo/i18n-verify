@@ -1,5 +1,5 @@
 {
-  "name": "@jlo/i18n-verify",
+  "name": "i18n-verify",
   "version": "0.0.2",
   "description": "Translation verification tool",
   "bin": {

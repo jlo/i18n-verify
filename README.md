@@ -1,5 +1,8 @@
 # Translation verification tool
 
+## Installation
+`npm install i18n-verify`
+
 ## Usage
 `i18n-verify [OPTION1] [OPTION2]... arg1 arg2...`
 
