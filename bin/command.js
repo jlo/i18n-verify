@@ -1,4 +1,6 @@
-var parseVerify = require('./parse-verify-core');
+#! /usr/bin/env node
+
+var parseVerify = require('../src/i18n-verify');
 var stdio = require('stdio');
 
 var ops = stdio.getopt({

@@ -1,7 +1,7 @@
 # Translation verification tool
 
 ## Usage
-`node parse-verify.js [OPTION1] [OPTION2]... arg1 arg2...`
+`i18n-verify [OPTION1] [OPTION2]... arg1 arg2...`
 
 The following options are supported:
 ```

@@ -1,9 +1,12 @@
 {
-  "name": "translation-verification",
-  "version": "1.0.0",
+  "name": "@jlo/i18n-verify",
+  "version": "0.0.1",
   "description": "Translation verification tool",
-  "main": "command.js",
+  "bin": {
+    "i18n-verify": "bin/command.js"
+  },
   "scripts": {
+    "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
     "test": "mocha"
   },
   "keywords": [
