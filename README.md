@@ -1,6 +1,9 @@
 # Translation verification tool
 
 ## Installation
+### Option 1
+Clone repo and run `npm link`
+### Option 2
 `npm install i18n-verify`
 
 ## Usage
