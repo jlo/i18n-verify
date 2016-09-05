@@ -5,6 +5,7 @@
   "bin": {
     "i18n-verify": "bin/command.js"
   },
+  "main": "bin/command.js",
   "scripts": {
     "patch-release": "npm version patch && npm publish --access=public && git push --follow-tags",
     "test": "mocha"
